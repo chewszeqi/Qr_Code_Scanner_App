@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QR Code Scanner Application</string>
+    <string name="qr_scanner_app">QR Scanner App</string>
+    <string name="recent_scanned">Recent-scanned</string>
+    <string name="favourites">Favourites</string>
+    <string name="scan">Scan</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="qr_scanner">QR Scanner</string>
+    <string name="scanned_history">Scanned History</string>
+    <string name="title_activity_check_in_out">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
