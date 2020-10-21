@@ -32,36 +32,33 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
         //QrResultDatabase.getAppDatabase(this)?.getQrDao()?.insertQrResult(qrResult)
     }
 
-    private fun setFragment(){
-        val bundle : Bundle? = intent.extras
-        val string : String? = intent.getStringExtra("Fragment")
-        if(string == "Fragment A"){
-            //finish()
-        setViewPager()
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragment1 = QrScannerFragment()
-        fragmentTransaction.replace(R.id.frameLayout, fragment1!!)
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit()
-            //startActivity(intent)
+    private fun setFragment() {
+        val bundle: Bundle? = intent.extras
+        val string: String? = intent.getStringExtra("Fragment")
+
+        if (string == "Fragment B") {
+            setViewPager2()
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragment2 = QrScannerFragment2()
+            fragmentTransaction.replace(R.id.frameLayout, fragment2!!)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
             clearStack()
-        }
+        } else {
+            setViewPager()
+            /*val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragment1 = QrScannerFragment()
+            fragmentTransaction.replace(R.id.frameLayout, fragment1!!)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+            clearStack()*/
 
-        else{
-        setViewPager2()
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragment2 = QrScannerFragment2()
-        fragmentTransaction.replace(R.id.frameLayout2, fragment2!!)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-        clearStack()
         }
-
     }
 
-    fun clearStack() {
+    private fun clearStack() {
         //Here we are clearing back stack fragment entries
         val backStackEntry = supportFragmentManager.backStackEntryCount
 
@@ -105,6 +102,7 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
         viewPager.adapter = MainPagerAdapter2(supportFragmentManager)
         viewPager.offscreenPageLimit = 2
     }
+
     private fun setBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener{
             viewPager.currentItem = when(it.itemId){

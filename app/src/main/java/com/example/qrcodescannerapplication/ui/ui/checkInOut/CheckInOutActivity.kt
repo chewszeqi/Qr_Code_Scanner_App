@@ -9,6 +9,7 @@ import com.example.qrcodescannerapplication.R
 import com.example.qrcodescannerapplication.ui.ui.mainactivity.MainActivity
 import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment
 import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment2
+import com.example.qrcodescannerapplication.ui.ui.workManagerNotification.WorkManagerNotificationActivity
 
 class CheckInOutActivity : AppCompatActivity() {
 
@@ -32,7 +33,7 @@ class CheckInOutActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity1() {
-        val  intent = Intent(this, MainActivity::class.java)
+        val  intent = Intent(this, WorkManagerNotificationActivity::class.java)
         intent.putExtra("Fragment", "Fragment A")
         startActivity(intent)
         //startActivity(Intent(this,MainActivity::class.java))

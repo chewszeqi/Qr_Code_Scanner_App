@@ -1,12 +1,16 @@
 package com.example.qrcodescannerapplication.ui.ui.workManagerNotification
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy.REPLACE
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.example.qrcodescannerapplication.R
+import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment
+import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment2
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar.make
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,12 +26,18 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import kotlin.jvm.java
 
 class WorkManagerNotificationActivity : AppCompatActivity() {
-
+    private var fragment1: QrScannerFragment? = null
+    private var fragment2: QrScannerFragment2? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_work_manager_notification)
+        val bundle: Bundle? = intent.extras
+        val string: String? = intent.getStringExtra("Fragment")
 
+        if (string == "Fragment A") {
         userInterface()
+        }
+
     }
 
     private fun userInterface() {
@@ -37,32 +47,34 @@ class WorkManagerNotificationActivity : AppCompatActivity() {
         collapsing_toolbar_l.title = titleNotification
 
         done_fab.setOnClickListener {
-            val customCalendar = Calendar.getInstance()
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                customCalendar.set(
-                    date_p.year, date_p.month, date_p.dayOfMonth, time_p.hour, time_p.minute, 0
-                )
-            }
-            val customTime = customCalendar.timeInMillis
-            val currentTime = currentTimeMillis()
-            if (customTime > currentTime) {
-                val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
-                val delay = customTime - currentTime
-                scheduleNotification(delay, data)
+                goToQrScannerFragment()
+                val customCalendar = Calendar.getInstance()
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    customCalendar.set(
+                        date_p.year, date_p.month, date_p.dayOfMonth, time_p.hour, time_p.minute, 0
+                    )
+                }
+                val customTime = customCalendar.timeInMillis
+                val currentTime = currentTimeMillis()
+                if (customTime > currentTime) {
+                    val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+                    val delay = customTime - currentTime
+                    scheduleNotification(delay, data)
 
-                val titleNotificationSchedule = getString(R.string.notification_schedule_title)
-                val patternNotificationSchedule = getString(R.string.notification_schedule_pattern)
-                make(
-                    coordinator_l,
-                    titleNotificationSchedule + SimpleDateFormat(
-                        patternNotificationSchedule, getDefault()
-                    ).format(customCalendar.time).toString(),
-                    LENGTH_LONG
-                ).show()
-            } else {
-                val errorNotificationSchedule = getString(R.string.notification_schedule_error)
-                make(coordinator_l, errorNotificationSchedule, LENGTH_LONG).show()
-            }
+                    val titleNotificationSchedule = getString(R.string.notification_schedule_title)
+                    val patternNotificationSchedule =
+                        getString(R.string.notification_schedule_pattern)
+                    make(
+                        coordinator_l,
+                        titleNotificationSchedule + SimpleDateFormat(
+                            patternNotificationSchedule, getDefault()
+                        ).format(customCalendar.time).toString(),
+                        LENGTH_LONG
+                    ).show()
+                } else {
+                    val errorNotificationSchedule = getString(R.string.notification_schedule_error)
+                    make(coordinator_l, errorNotificationSchedule, LENGTH_LONG).show()
+                }
         }
     }
 
@@ -72,5 +84,40 @@ class WorkManagerNotificationActivity : AppCompatActivity() {
 
         val instanceWorkManager = WorkManager.getInstance(this)
         instanceWorkManager.beginUniqueWork(NOTIFICATION_WORK, REPLACE, notificationWork).enqueue()
+    }
+
+    fun goToQrScannerFragment(){
+
+            //finish()
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragment1 = QrScannerFragment()
+            fragmentTransaction.replace(R.id.frameLayout, fragment1!!)
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit()
+            //startActivity(intent)
+            clearStack()
+
+    }
+
+    fun clearStack() {
+        //Here we are clearing back stack fragment entries
+        val backStackEntry = supportFragmentManager.backStackEntryCount
+
+        if (backStackEntry > 0) {
+            for (i in 0 until backStackEntry) {
+                supportFragmentManager.popBackStackImmediate()
+            }
+        }
+
+        //Here we are removing all the fragment that are shown here
+        if (supportFragmentManager.fragments != null && supportFragmentManager.fragments.size > 0) {
+            for (i in supportFragmentManager.fragments.indices) {
+                val mFragment: Fragment? = supportFragmentManager.fragments[i]
+                if (mFragment != null) {
+                    supportFragmentManager.beginTransaction().remove(mFragment).commit()
+                }
+            }
+        }
     }
 }
