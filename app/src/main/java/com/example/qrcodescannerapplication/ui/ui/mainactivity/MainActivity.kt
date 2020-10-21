@@ -11,7 +11,7 @@ import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment2
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(), QrScannerFragment.QrScannerFragmentListener, QrScannerFragment2.QrScannerFragment2Listener {
+class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentListener, QrScannerFragment2.QrScannerFragment2Listener*/ {
     private var fragment1: QrScannerFragment? = null
     private var fragment2: QrScannerFragment2? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,14 +82,14 @@ class MainActivity : AppCompatActivity(), QrScannerFragment.QrScannerFragmentLis
         }
     }
 
-    override fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
+    /*override fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
         //fragment2.updateEditText(input)
 
     }
 
     override fun onInputBSent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
 
-    }
+    }*/
 
 
 

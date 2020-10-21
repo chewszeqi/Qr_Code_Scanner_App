@@ -43,19 +43,19 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var resultDialog : QrCodeResultDialog
 
-    private var listener: QrScannerFragment2Listener? = null
+    //private var listener: QrScannerFragment2Listener? = null
 
     private var editText: EditText? = null
 
     private var confirm: TextView? = null
 
-    interface QrScannerFragment2Listener {
+    /*interface QrScannerFragment2Listener {
         fun onInputBSent(input: CharSequence, formattedDate: Date, formattedTime: Date)
-    }
+    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_qr_scanner2, container, false)
+        mView = inflater.inflate(R.layout.fragment_qr_scanner, container, false)
         initViews()
         onClicks()
         return mView.rootView
@@ -77,7 +77,7 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
     }
 
     private fun onClicks() {
-        mView.flashToggle2.setOnClickListener {
+        mView.flashToggle.setOnClickListener {
             Toast.makeText(context, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
             if(it.isSelected){
                 offFlashLight()
@@ -87,12 +87,12 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
     }
 
     private fun offFlashLight() {
-        mView.flashToggle2.isSelected = false
+        mView.flashToggle.isSelected = false
         scannerView.flash = false
     }
 
     private fun onFlashLight() {
-        mView.flashToggle2.isSelected = true
+        mView.flashToggle.isSelected = true
         scannerView.flash = true
     }
 
@@ -194,7 +194,7 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
                 }
             }
 
-    }*/
+    }
 
 
     private fun onClick() {
@@ -234,6 +234,6 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
+    }*/
 
 }

@@ -44,15 +44,15 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var resultDialog : QrCodeResultDialog
 
-    private var listener: QrScannerFragmentListener? = null
+    //private var listener: QrScannerFragmentListener? = null
 
     private var editText: EditText? = null
 
     private var confirm: TextView? = null
 
-    interface QrScannerFragmentListener {
+    /*interface QrScannerFragmentListener {
         fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date)
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -177,7 +177,7 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
     }
 
 
-    private fun onClick() {
+    /*private fun onClick() {
             confirm = mView.findViewById(R.id.confirm)
             confirm!!.setOnClickListener{
                 Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
@@ -214,6 +214,6 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
+    }*/
 
 }
