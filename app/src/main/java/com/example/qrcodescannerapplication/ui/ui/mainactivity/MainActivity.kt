@@ -1,6 +1,7 @@
 package com.example.qrcodescannerapplication.ui.ui.mainactivity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -8,11 +9,20 @@ import com.example.qrcodescannerapplication.R
 import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment
 import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment2
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), QrScannerFragment.QrScannerFragmentListener, QrScannerFragment2.QrScannerFragment2Listener {
+    private var fragment1: QrScannerFragment? = null
+    private var fragment2: QrScannerFragment2? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        /*fragment1 = QrScannerFragment()
+        fragment2 = QrScannerFragment2()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_a, fragment1!!)
+            .replace(R.id.container_b, fragment2!!)
+            .commit()*/
         setFragment()
         setViewPager()
         setBottomNavigation()
@@ -27,10 +37,11 @@ class MainActivity : AppCompatActivity() {
         val string : String? = intent.getStringExtra("Fragment")
         if(string == "Fragment A"){
             //finish()
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = QrScannerFragment()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragment1 = QrScannerFragment()
+        fragmentTransaction.replace(R.id.frameLayout, fragment1!!)
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit()
             //startActivity(intent)
@@ -38,11 +49,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         else{
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = QrScannerFragment2()
-        fragmentTransaction.replace(R.id.frameLayout2, fragment)
-        fragmentTransaction.addToBackStack(null);
+        fragment2 = QrScannerFragment2()
+        fragmentTransaction.replace(R.id.frameLayout2, fragment2!!)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         clearStack()
         }
@@ -52,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     fun clearStack() {
         //Here we are clearing back stack fragment entries
         val backStackEntry = supportFragmentManager.backStackEntryCount
+
         if (backStackEntry > 0) {
             for (i in 0 until backStackEntry) {
                 supportFragmentManager.popBackStackImmediate()
@@ -68,6 +81,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
+        //fragment2.updateEditText(input)
+
+    }
+
+    override fun onInputBSent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
+
+    }
+
+
 
 
     private fun setViewPager() {
@@ -112,6 +136,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
         )
     }
 

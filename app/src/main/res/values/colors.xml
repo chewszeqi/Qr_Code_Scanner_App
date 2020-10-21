@@ -10,4 +10,5 @@
     <color name="lightColor">#64E71A</color>
     <color name="lightGray">#D1D0D0</color>
     <color name="darkBrown">#2B2828</color>
+    <color name="colorNull">#fafafa</color>
 </resources>

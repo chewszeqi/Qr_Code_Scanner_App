@@ -19,12 +19,16 @@ class CheckInOutActivity : AppCompatActivity() {
         val checkIn = findViewById<Button>(R.id.checkIn)
         checkIn?.setOnClickListener()
         {
-            goToMainActivity1() }
+            goToMainActivity1()
+
+        }
 
         val checkOut = findViewById<Button>(R.id.checkOut)
         checkOut?.setOnClickListener()
         {
-            goToMainActivity2() }
+            goToMainActivity2()
+
+        }
     }
 
     private fun goToMainActivity1() {

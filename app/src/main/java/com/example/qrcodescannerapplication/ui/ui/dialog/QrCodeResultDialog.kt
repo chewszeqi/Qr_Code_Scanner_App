@@ -10,6 +10,8 @@ import android.widget.Toast
 import com.example.qrcodescannerapplication.R
 import com.example.qrcodescannerapplication.ui.ui.utils.toFormattedDisplay
 import kotlinx.android.synthetic.main.layout_qr_result_show.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class QrCodeResultDialog(var context : Context) {
 
@@ -63,6 +65,16 @@ class QrCodeResultDialog(var context : Context) {
         val clip = ClipData.newPlainText("QrScannerResult", dialog.scannedText.text)
         clipboard.text = clip.getItemAt(0).text.toString()
         Toast.makeText(context, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
+    }
+
+    fun show(qrResult: String) {
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat.getDateTimeInstance()
+        val formattedDate = formatter.format(date)
+        dialog.scannedDate.text = formattedDate
+        dialog.scannedText.text = qrResult
+        //dialog.favouriteIcon.isSelected = qrResult!!.favourite
+        dialog.show()
     }
 
     interface OnDismissListener{

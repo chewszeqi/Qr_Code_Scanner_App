@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ui.scanner.QrScannerFragment">
+    tools:context=".ui.ui.scanner.QrScannerFragment2">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/flashToggle"
+        android:id="@+id/flashToggle2"
         android:layout_width="30dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
@@ -19,7 +19,7 @@
 
 
     <TextView
-        android:id="@+id/confirm"
+        android:id="@+id/confirm2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -31,14 +31,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/containerScanner"
+        android:id="@+id/containerScanner2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flashToggle">
+        app:layout_constraintTop_toBottomOf="@+id/flashToggle2">
 
     </FrameLayout>
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.ui.scanned_history.ScannedHistoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="30sp"
-        android:text="@string/scanned_history" />
+        android:text="@string/scanned_history"
+        android:textSize="30sp" />
 
 </FrameLayout>

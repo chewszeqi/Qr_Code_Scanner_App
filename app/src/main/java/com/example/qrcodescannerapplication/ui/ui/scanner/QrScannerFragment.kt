@@ -1,19 +1,28 @@
 package com.example.qrcodescannerapplication.ui.ui.scanner
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.qrcodescannerapplication.R
 import com.example.qrcodescannerapplication.ui.ui.dialog.QrCodeResultDialog
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.Result
 import kotlinx.android.synthetic.main.fragment_qr_scanner.view.*
+import kotlinx.android.synthetic.main.layout_qr_result_show.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
-
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -21,8 +30,10 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
  * create an instance of this fragment.
  */
 class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
+
     companion object {
-        fun newInstance(): QrScannerFragment{
+        private val Tag = QrScannerFragment::class.simpleName
+        fun newInstance(): QrScannerFragment {
             return QrScannerFragment()
         }
     }
@@ -33,7 +44,21 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var resultDialog : QrCodeResultDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var listener: QrScannerFragmentListener? = null
+
+    private var editText: EditText? = null
+
+    private var confirm: TextView? = null
+
+    interface QrScannerFragmentListener {
+        fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_qr_scanner, container, false)
         initViews()
@@ -91,6 +116,7 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
         scannerView.startCamera()
     }
 
+
     override fun onResume(){
         super.onResume()
         scannerView.setResultHandler(this)
@@ -111,16 +137,83 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
         onQrResult(rawResult?.text)
     }
 
-    private fun onQrResult(text: String?){
-        if(text.isNullOrEmpty()){
+    private fun onQrResult(text: String?) {
+        if (text.isNullOrEmpty()) {
             Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             //checkResult(rawResult:Result)
+            saveToDatabase(text)
+            //Toast.makeText(context!!, "Please confirm", Toast.LENGTH_SHORT).show()
+            //confirmScan(text)
+            //onClick()
+            resultDialog.show(text)
+
         }
     }
 
-    private fun checkResult(rawResult:Result) {
+    private fun saveToDatabase(text: String?){
+        val db = FirebaseFirestore.getInstance()
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat.getDateInstance()
+        val formattedDate = formatter.format(date)
+        val location = text
+        val time = Calendar.getInstance().time
+        val formatter1 = SimpleDateFormat.getTimeInstance()
+        val formattedTime = formatter1.format(time)
 
+        val hm: HashMap<String, Any?>  = hashMapOf(
+            "Date" to formattedDate,
+            "Location" to location,
+            "Time" to formattedTime
+        )
+        db.collection("Check In").add(hm).addOnSuccessListener { documentReference ->
+            Log.d(Tag, "DocumentSnapshot written with ID: ${documentReference.id}")
+        }.addOnFailureListener{ e ->
+            Log.w(Tag, "Error adding document", e)
+
+        }
+
+
+    }
+
+
+    private fun onClick() {
+            confirm = mView.findViewById(R.id.confirm)
+            confirm!!.setOnClickListener{
+                Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
+                checked()
+            }
+        }
+
+    private fun checked() {
+        val input: CharSequence = editText?.getText().toString()
+        //this.listener!!.onInputASent(input, formattedDate, formattedTime)
+    }
+
+    private fun unchecked(){
+        Toast.makeText(context!!, "Please confirm your scan", Toast.LENGTH_SHORT).show()
+    }
+
+    fun updateEditText(newText: CharSequence?) {
+        editText?.setText(newText)
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = if (context is QrScannerFragmentListener) {
+            context
+        } else {
+            throw RuntimeException(
+                context.toString()
+                        + " must implement FragmentAListener"
+            )
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 
 }
