@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
             .replace(R.id.container_b, fragment2!!)
             .commit()*/
         setFragment()
-        setViewPager()
+        //setViewPager()
         setBottomNavigation()
         setViewPagerListener()
         //val qrResult = QrResult(result = "Dummy Text", resultType = "TEXT", favourite = false, calendar = Calendar.getInstance())
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
         val string : String? = intent.getStringExtra("Fragment")
         if(string == "Fragment A"){
             //finish()
-
+        setViewPager()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragment1 = QrScannerFragment()
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
         }
 
         else{
-
+        setViewPager2()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragment2 = QrScannerFragment2()
@@ -100,6 +100,11 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
         viewPager.offscreenPageLimit = 2
     }
 
+
+    private fun setViewPager2(){
+        viewPager.adapter = MainPagerAdapter2(supportFragmentManager)
+        viewPager.offscreenPageLimit = 2
+    }
     private fun setBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener{
             viewPager.currentItem = when(it.itemId){

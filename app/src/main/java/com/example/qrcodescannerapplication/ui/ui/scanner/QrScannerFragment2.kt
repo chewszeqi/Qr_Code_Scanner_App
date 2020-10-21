@@ -67,7 +67,7 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
     }
 
     private fun setResultDialog() {
-        Toast.makeText(context, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
         resultDialog = QrCodeResultDialog(context!!)
         resultDialog.setOnDismissListener(object : QrCodeResultDialog.OnDismissListener {
             override fun onDismiss() {

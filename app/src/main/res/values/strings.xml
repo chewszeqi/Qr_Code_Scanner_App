@@ -15,8 +15,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_main2">MainActivity</string>
 
-    <string name="notification_title">Reminder</string>
-    <string name="notification_subtitle">Surprise!</string>
+    <string name="notification_title">Reminder!!</string>
+    <string name="notification_subtitle">Check Out Reminder!</string>
 
     <string name="notification_schedule_title">Schedule notification:\u00a0</string>
     <string name="notification_schedule_pattern">dd.MM.yy \u00B7 HH:mm</string>
