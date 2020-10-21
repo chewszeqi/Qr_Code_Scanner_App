@@ -44,16 +44,6 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var resultDialog : QrCodeResultDialog
 
-    //private var listener: QrScannerFragmentListener? = null
-
-    private var editText: EditText? = null
-
-    private var confirm: TextView? = null
-
-    /*interface QrScannerFragmentListener {
-        fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date)
-    }*/
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -141,13 +131,8 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
         if (text.isNullOrEmpty()) {
             Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
         } else {
-            //checkResult(rawResult:Result)
             saveToDatabase(text)
-            //Toast.makeText(context!!, "Please confirm", Toast.LENGTH_SHORT).show()
-            //confirmScan(text)
-            //onClick()
             resultDialog.show(text)
-
         }
     }
 
@@ -173,47 +158,6 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
 
         }
 
-
     }
-
-
-    /*private fun onClick() {
-            confirm = mView.findViewById(R.id.confirm)
-            confirm!!.setOnClickListener{
-                Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
-                checked()
-            }
-        }
-
-    private fun checked() {
-        val input: CharSequence = editText?.getText().toString()
-        //this.listener!!.onInputASent(input, formattedDate, formattedTime)
-    }
-
-    private fun unchecked(){
-        Toast.makeText(context!!, "Please confirm your scan", Toast.LENGTH_SHORT).show()
-    }
-
-    fun updateEditText(newText: CharSequence?) {
-        editText?.setText(newText)
-    }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = if (context is QrScannerFragmentListener) {
-            context
-        } else {
-            throw RuntimeException(
-                context.toString()
-                        + " must implement FragmentAListener"
-            )
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }*/
 
 }

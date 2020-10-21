@@ -11,25 +11,15 @@ import com.example.qrcodescannerapplication.ui.ui.scanner.QrScannerFragment2
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentListener, QrScannerFragment2.QrScannerFragment2Listener*/ {
+class MainActivity : AppCompatActivity(){
     private var fragment1: QrScannerFragment? = null
     private var fragment2: QrScannerFragment2? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /*fragment1 = QrScannerFragment()
-        fragment2 = QrScannerFragment2()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container_a, fragment1!!)
-            .replace(R.id.container_b, fragment2!!)
-            .commit()*/
         setFragment()
-        //setViewPager()
         setBottomNavigation()
         setViewPagerListener()
-        //val qrResult = QrResult(result = "Dummy Text", resultType = "TEXT", favourite = false, calendar = Calendar.getInstance())
-
-        //QrResultDatabase.getAppDatabase(this)?.getQrDao()?.insertQrResult(qrResult)
     }
 
     private fun setFragment() {
@@ -47,13 +37,6 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
             clearStack()
         } else {
             setViewPager()
-            /*val fragmentManager = supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragment1 = QrScannerFragment()
-            fragmentTransaction.replace(R.id.frameLayout, fragment1!!)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-            clearStack()*/
 
         }
     }
@@ -78,18 +61,6 @@ class MainActivity : AppCompatActivity()/*, QrScannerFragment.QrScannerFragmentL
             }
         }
     }
-
-    /*override fun onInputASent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
-        //fragment2.updateEditText(input)
-
-    }
-
-    override fun onInputBSent(input: CharSequence, formattedDate: Date, formattedTime: Date) {
-
-    }*/
-
-
-
 
     private fun setViewPager() {
         //setFragment()

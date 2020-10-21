@@ -16,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.Result
 import kotlinx.android.synthetic.main.fragment_qr_scanner.view.*
 import kotlinx.android.synthetic.main.fragment_qr_scanner.view.flashToggle
-import kotlinx.android.synthetic.main.fragment_qr_scanner2.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -43,15 +42,6 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var resultDialog : QrCodeResultDialog
 
-    //private var listener: QrScannerFragment2Listener? = null
-
-    private var editText: EditText? = null
-
-    private var confirm: TextView? = null
-
-    /*interface QrScannerFragment2Listener {
-        fun onInputBSent(input: CharSequence, formattedDate: Date, formattedTime: Date)
-    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -67,7 +57,6 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
     }
 
     private fun setResultDialog() {
-        //Toast.makeText(context, "Copied to clipboard.", Toast.LENGTH_SHORT).show()
         resultDialog = QrCodeResultDialog(context!!)
         resultDialog.setOnDismissListener(object : QrCodeResultDialog.OnDismissListener {
             override fun onDismiss() {
@@ -138,11 +127,7 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
         if (text.isNullOrEmpty()) {
             Toast.makeText(context!!, "Empty Qr Code", Toast.LENGTH_SHORT).show()
         } else {
-            //checkResult(rawResult:Result)
             saveToDatabase(text)
-            //Toast.makeText(context!!, "Please confirm2", Toast.LENGTH_SHORT).show()
-            //confirmScan(text)
-            //onClick()
             resultDialog.show(text)
 
         }
@@ -170,70 +155,6 @@ class QrScannerFragment2 : Fragment(), ZXingScannerView.ResultHandler {
 
         }
 
-
-
     }
-
-    /*private fun realTimeUpdate(text: String, formattedTime: String) {
-        val db = FirebaseFirestore.getInstance()
-        val data = db.collection("Check In")
-            .whereEqualTo("Location", text)
-            .addSnapshotListener { snapshots, e ->
-                if (e != null) {
-                    Log.w(Tag, "listen:error", e)
-                    return@addSnapshotListener
-                }
-
-                for (dc in snapshots!!.documentChanges) {
-                    when (dc.type) {
-                        DocumentChange.Type.ADDED ->
-                        Log.d(Tag, "Check In: ${dc.document.data}")
-                    }
-                    val checkInTime = dc.document.data.get("Time")
-                    //val duration = formattedTime-checkInTime
-                }
-            }
-
-    }
-
-
-    private fun onClick() {
-        confirm = mView.findViewById(R.id.confirm)
-        confirm!!.setOnClickListener{
-            Toast.makeText(context!!, "fragment2", Toast.LENGTH_SHORT).show()
-            checked()
-        }
-    }
-
-    private fun checked() {
-        val input: CharSequence = editText?.getText().toString()
-        //this.listener!!.onInputASent(input, formattedDate, formattedTime)
-    }
-
-    private fun unchecked(){
-        Toast.makeText(context!!, "Please confirm your scan", Toast.LENGTH_SHORT).show()
-    }
-
-    fun updateEditText(newText: CharSequence?) {
-        editText?.setText(newText)
-    }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = if (context is QrScannerFragment2Listener) {
-            context
-        } else {
-            throw RuntimeException(
-                context.toString()
-                        + " must implement FragmentBListener"
-            )
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }*/
 
 }
